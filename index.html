@@ -19,35 +19,35 @@
     // Identificador del ítem en Archive.org
     const identifier = '3x3eyesS01x01-hls';
     
-    // Utiliza la librería iajs correctamente
-    const item = ia.item(identifier);
-    
-    // Obtenemos la metadata (opcional)
-    item.metadata().then(metadata => {
-      console.log("Metadata obtenida:", metadata);
-      // Construir la URL HLS según la convención del ítem
-      const hlsUrl = `https://archive.org/download/${identifier}/master.m3u8`;
-      
-      // Usar el Cloudflare Worker como proxy CORS
-      const proxyUrl = 'https://archive.elmilloranime.workers.dev/?url=' + encodeURIComponent(hlsUrl);
-      
-      const video = document.getElementById('video');
-      if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(proxyUrl);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
-          video.play();
-        });
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = proxyUrl;
-        video.addEventListener('loadedmetadata', function() {
-          video.play();
-        });
-      }
-    }).catch(err => {
-      console.error("Error al obtener metadata:", err);
-    });
+    // Obtener metadata usando la API de metadata de iajs
+    ia.MetadataAPI.get({ identifier: identifier })
+      .then(metadata => {
+        console.log("Metadata obtenida:", metadata);
+        // Construir la URL HLS según convención del ítem.
+        // Ajusta esta URL si tu ítem usa otra estructura.
+        const hlsUrl = `https://archive.org/download/${identifier}/master.m3u8`;
+        
+        // Utiliza un proxy CORS (por ejemplo, un Cloudflare Worker) para evitar errores CORS
+        const proxyUrl = 'https://archive.elmilloranime.workers.dev/?url=' + encodeURIComponent(hlsUrl);
+        
+        const video = document.getElementById('video');
+        if (Hls.isSupported()) {
+          const hls = new Hls();
+          hls.loadSource(proxyUrl);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            video.play();
+          });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = proxyUrl;
+          video.addEventListener('loadedmetadata', function() {
+            video.play();
+          });
+        }
+      })
+      .catch(err => {
+        console.error("Error al obtener metadata:", err);
+      });
   </script>
 </body>
 </html>
