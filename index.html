@@ -19,15 +19,14 @@
     // Identificador del ítem en Archive.org
     const identifier = '3x3eyesS01x01-hls';
     
-    // Obtener metadata usando la API de metadata de iajs
+    // Utiliza la API de metadata de iajs para obtener información del ítem
     ia.MetadataAPI.get({ identifier: identifier })
       .then(metadata => {
         console.log("Metadata obtenida:", metadata);
-        // Construir la URL HLS según convención del ítem.
-        // Ajusta esta URL si tu ítem usa otra estructura.
+        // Construir la URL HLS (según la convención del ítem)
         const hlsUrl = `https://archive.org/download/${identifier}/master.m3u8`;
         
-        // Utiliza un proxy CORS (por ejemplo, un Cloudflare Worker) para evitar errores CORS
+        // Utilizar el Cloudflare Worker como proxy CORS para reescribir las URLs
         const proxyUrl = 'https://archive.elmilloranime.workers.dev/?url=' + encodeURIComponent(hlsUrl);
         
         const video = document.getElementById('video');
