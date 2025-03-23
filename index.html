@@ -19,13 +19,13 @@
     // Identificador del ítem en Archive.org
     const identifier = '3x3eyesS01x01-hls';
     
-    // Crea un objeto IA usando iajs
-    const item = new IA(identifier);
+    // Utiliza la librería iajs correctamente
+    const item = ia.item(identifier);
     
-    // Obtenemos la metadata (opcional, para verificar el ítem)
+    // Obtenemos la metadata (opcional)
     item.metadata().then(metadata => {
       console.log("Metadata obtenida:", metadata);
-      // Construir la URL HLS (ajusta según la convención de tu ítem)
+      // Construir la URL HLS según la convención del ítem
       const hlsUrl = `https://archive.org/download/${identifier}/master.m3u8`;
       
       // Usar el Cloudflare Worker como proxy CORS
