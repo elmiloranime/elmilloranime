@@ -18,35 +18,25 @@
   <script>
     // Identificador del ítem en Archive.org
     const identifier = '3x3eyesS01x01-hls';
+    // Construir la URL del manifest HLS
+    const hlsUrl = `https://archive.org/download/${identifier}/master.m3u8`;
+    // Usar el Cloudflare Worker como proxy CORS (nuestro Worker reescribe las rutas relativas)
+    const proxyUrl = 'https://archive.elmilloranime.workers.dev/?url=' + encodeURIComponent(hlsUrl);
     
-    // Utiliza la API de metadata de iajs para obtener información del ítem
-    ia.MetadataAPI.get({ identifier: identifier })
-      .then(metadata => {
-        console.log("Metadata obtenida:", metadata);
-        // Construir la URL HLS (según la convención del ítem)
-        const hlsUrl = `https://archive.org/download/${identifier}/master.m3u8`;
-        
-        // Utilizar el Cloudflare Worker como proxy CORS para reescribir las URLs
-        const proxyUrl = 'https://archive.elmilloranime.workers.dev/?url=' + encodeURIComponent(hlsUrl);
-        
-        const video = document.getElementById('video');
-        if (Hls.isSupported()) {
-          const hls = new Hls();
-          hls.loadSource(proxyUrl);
-          hls.attachMedia(video);
-          hls.on(Hls.Events.MANIFEST_PARSED, function() {
-            video.play();
-          });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-          video.src = proxyUrl;
-          video.addEventListener('loadedmetadata', function() {
-            video.play();
-          });
-        }
-      })
-      .catch(err => {
-        console.error("Error al obtener metadata:", err);
+    const video = document.getElementById('video');
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(proxyUrl);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        video.play();
       });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = proxyUrl;
+      video.addEventListener('loadedmetadata', function() {
+        video.play();
+      });
+    }
   </script>
 </body>
 </html>
