@@ -1,0 +1,67 @@
+{
+    "name": "3x3 Ulls",
+    "type": "ova",
+    "seassons": [
+        {
+            "name": "S1",
+            "description": "",
+            "episodes": [
+                {
+                    "id": "01",
+                    "name": "Reencarnació",
+                    "date": "1991-07-25",
+                    "description": "Yakumo Fugii, un estudiant japonès ordinari, hereta la responsabilitat de cuidar la Pai, una noia jove del Nepal, del seu pare arqueòleg moribund. Però la Pai és molt més del que aparenta ser. És l’última d’una raça màgica desapareguda coneguda com els Sanjiyan Unkara, o Triclops, i està en una cerca desesperada contra les forces de la foscor per trobar el Ningen no Zou (l’Estàtua de la Humanitat) per convertir-se en humana. En una lluita contra un dimoni, en Yakumo gairebé mor, i per salvar-lo, la Pai el transforma en un Wu, un zombi vinculat al seu servei que no pot morir. En Yakumo i la Pai viatgen a Hong Kong per trobar-se amb la Ling Ling Lee, una col·lega del seu pare, per localitzar l’estàtua. Però els dimonis del senyor fosc Kaiyan Wang ja són allà per recuperar-la... sigui quin sigui el preu.",
+                    "archive": "https://archive.org/download/3x3eyesS01x01-hls/master.m3u8"
+                },
+                {
+                    "id": "02",
+                    "name": "Yakumo",
+                    "date": "1991-09-26",
+                    "description": "En Yakumo i la Pai tornen al Japó des de Hong Kong després que l’Estàtua de la Humanitat desaparegui de la misteriosa mansió de la senyora Huang. En Yakumo torna a l’escola i als seus amics amb l’esperança de reprendre una vida normal. Però res no és normal quan ets un zombi no-mort vinculat a un ésser màgic i els dimonis comencen a atacar els teus companys d’escola al pati!",
+                    "archive": ""
+                },
+                {
+                    "id": "03",
+                    "name": "Arriscant la vida",
+                    "date": "1992-01-23",
+                    "description": "En Yakumo i la Pai tornen a Hong Kong quan descobreixen que l’Estàtua de la Humanitat es troba en possessió d’en Steve Long, un altre col·lega de Monster Buster, Inc. Però abans que puguin arribar-hi, en Steve i l’estàtua són segrestats. En Yakumo, la Pai, la Ling Ling i la Meixing, la germana d’en Steve, intenten rescatar-los. Però tot és una trampa per capturar la Pai, l’estàtua i la Meixing en un sacrifici humà per alliberar l’esperit fosc d’en Kaiyan Wang!",
+                    "archive": ""
+                },
+                {
+                    "id": "04",
+                    "name": "Perduts",
+                    "date": "1992-03-19",
+                    "description": "En Yakumo, la Pai i l’equip de Monster Buster, Inc celebren haver recuperat l’estàtua a la finca de la Madame Huang, però la festa s’espatlla quan apareix un repte esfereïdor llançat per un poderós Wu al servei d’en Kaiyan Wang. La Pai s’enfronta al Wu en un duel al port d’Aberdeen, i la meitat del port queda destruïda com a conseqüència. Com podrà continuar en Yakumo sense l’àncora de la seva vida?",
+                    "archive": ""
+                }
+            ]
+        },
+        {
+            "name": "S2",
+            "description": "",
+            "episodes": [
+                {
+                    "id": "05",
+                    "name": "Descendència",
+                    "date": "1995-07-25",
+                    "description": "El moment per a la resurrecció del senyor fosc Kuei-Yan-Wang s’acosta, igual que la fi del món. En Yakumo Fugii busca qui té la seva ànima per poder tornar a ser humà, però primer haurà de participar en una batalla èpica plena de misticisme antic, sang i tempesta.",
+                    "archive": ""
+                },
+                {
+                    "id": "06",
+                    "name": "La Clau",
+                    "date": "1995-12-18",
+                    "description": "Quan en Yakumo i la Pai emprenen una recerca per desbloquejar els records ocults de la Pai, desfermen tot el potencial del seu poder. S'uneixen a un monjo màgic i a un caçador de tresors de dubtosa reputació mentre intenten trobar la Ciutat Perduda dels Sanjiyan — abans que comenci la batalla definitiva.",
+                    "archive": ""
+                },
+                {
+                    "id": "07",
+                    "name": "El retorn",
+                    "date": "1996-06-25",
+                    "description": "La recerca d’en Yakumo i la Pai s’acosta a la seva conclusió mentre emprenen la part més perillosa del seu viatge. Arriben a la Porta Sagrada del Temps Perdut, on hauran d’endinsar-se en el passat fosc del poble Sanjiyan. La batalla final s’apropa ràpidament, i les forces de la foscor continuen acumulant poder, així que tot depèn dels poders de la Pai perquè el bé triomfi sobre el mal.",
+                    "archive": ""
+                }
+            ]
+        }
+    ]
+}

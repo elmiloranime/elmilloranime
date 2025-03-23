@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reproductor HLS con iajs y Proxy CORS</title>
+  <!-- Carga hls.js desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <!-- Carga iajs para navegador desde unpkg -->
+  <script src="https://unpkg.com/iajs/dist/ia.browser.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    video { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+  <h1>Reproductor HLS desde Archive.org</h1>
+  <video id="video" controls></video>
+  <script>
+    // Identificador del ítem en Archive.org
+    const identifier = '3x3eyesS01x01-hls';
+    
+    // Crea un objeto IA usando iajs
+    const item = new IA(identifier);
+    
+    // Obtenemos la metadata (opcional, para verificar el ítem)
+    item.metadata().then(metadata => {
+      console.log("Metadata obtenida:", metadata);
+      // Construir la URL HLS (ajusta según la convención de tu ítem)
+      const hlsUrl = `https://archive.org/download/${identifier}/master.m3u8`;
+      
+      // Usar el Cloudflare Worker como proxy CORS
+      const proxyUrl = 'https://archive.elmilloranime.workers.dev/?url=' + encodeURIComponent(hlsUrl);
+      
+      const video = document.getElementById('video');
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(proxyUrl);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          video.play();
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = proxyUrl;
+        video.addEventListener('loadedmetadata', function() {
+          video.play();
+        });
+      }
+    }).catch(err => {
+      console.error("Error al obtener metadata:", err);
+    });
+  </script>
+</body>
+</html>
