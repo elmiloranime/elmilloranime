@@ -33,6 +33,7 @@ function mostrarModal(titulo, contenido, tipo) {
   const modalContent = document.getElementById('modal-content');
 
   modalContent.innerHTML = `
+    <span class="modal-close" onclick="cerrarModal()">×</span>
     <span class="categoria ${tipo}">${tipo}</span>
     <h2>${titulo}</h2>
     ${contenido}
@@ -40,6 +41,7 @@ function mostrarModal(titulo, contenido, tipo) {
   modal.style.display = 'flex';
   document.title = titulo;
 }
+
 
 function cerrarModal() {
   document.getElementById('modal').style.display = 'none';
