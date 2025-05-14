@@ -133,7 +133,7 @@ header {
   font-size: 1.5rem;
   cursor: pointer;
 }
-.modal .rurl {display: none;}
+span.url {display: none;}
 /* === FITXA (CARÀTULA + SINOPSIS) === */
 .ficha {
   display: flex;
