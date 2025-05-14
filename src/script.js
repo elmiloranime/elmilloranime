@@ -98,3 +98,40 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.visibility = 'visible';
   });
 });
+
+
+
+const overlay     = document.getElementById('video-overlay');
+const overlayVid  = document.getElementById('overlay-player');
+const closeButton = document.getElementById('video-close');
+
+// Mostra el vídeo i afegeix &video=<eps> a la URL
+function showVideo(src, ep) {
+  overlayVid.src = src;
+  overlay.classList.add('active');
+  overlayVid.play();
+
+  const params = new URLSearchParams(window.location.search);
+  params.set('video', ep);
+  history.pushState({ video: ep }, '', window.location.pathname + '?' + params);
+}
+
+// Amaga l’overlay i neteja el paràmetre video
+function hideVideo() {
+  overlayVid.pause();
+  overlayVid.removeAttribute('src');
+  overlay.classList.remove('active');
+
+  const params = new URLSearchParams(window.location.search);
+  params.delete('video');
+  history.replaceState(null, '', window.location.pathname + (params.toString() ? '?' + params : ''));
+}
+
+closeButton.addEventListener('click', hideVideo);
+
+// Si l’usuari fa “atrás” amb el navegador, també tanquem l’overlay
+window.addEventListener('popstate', (e) => {
+  if (!e.state || !e.state.video) {
+    hideVideo();
+  }
+});
