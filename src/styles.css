@@ -174,3 +174,31 @@ header {
   display: block;
   border-radius: inherit;
 }
+
+.ficha {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2rem auto;
+  max-width: 900px;
+  padding: 1rem;
+}
+
+.ficha .caraturla {
+  flex: 0 0 300px;
+  margin: 0;
+}
+
+.ficha .sinopsis {
+  flex: 1 1 400px;
+  color: #eee;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
