@@ -183,24 +183,19 @@ header {
 .ficha {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-areas:
-    "caraturla sinopsis"
-    ".         sinopsis";
   gap: 1.5rem;
   justify-content: center;
   max-width: 900px;
   margin: 2rem auto;
   padding: 1rem;
+  align-items: start;
 }
 
 .ficha .caraturla {
-  grid-area: caraturla;
   max-width: 300px;
-  margin: 0;
 }
 
 .ficha .sinopsis {
-  grid-area: sinopsis;
   color: #eee;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -209,4 +204,15 @@ header {
   border-radius: 10px;
   box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
   min-width: 250px;
+}
+
+@media (max-width: 768px) {
+  .ficha {
+    grid-template-columns: 1fr;
+  }
+
+  .ficha .caraturla,
+  .ficha .sinopsis {
+    max-width: 100%;
+  }
 }
