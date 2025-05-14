@@ -1,25 +1,30 @@
 const LIBS = [
   'https://vjs.zencdn.net/7.24.0/video.min.js',
-  'https://cdn.jsdelivr.net/npm/videojs-contrib-quality-levels@2.0.10/dist/videojs-contrib-quality-levels.min.js',
-  'https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector@1.2.0/dist/videojs-hls-quality-selector.min.js'
+  'https://unpkg.com/videojs-contrib-quality-levels@2.0.10/dist/videojs-contrib-quality-levels.min.js',
+  'https://unpkg.com/videojs-hls-quality-selector@1.1.1/dist/videojs-hls-quality-selector.min.js'
 ];
 
 function loadScript(src) {
-  return new Promise((resolve, reject) => {
+  return new Promise((res, rej) => {
     const s = document.createElement('script');
     s.src = src;
-    s.onload = resolve;
-    s.onerror = reject;
+    s.onload = () => res();
+    s.onerror = (e) => rej(e);
     document.head.appendChild(s);
   });
 }
 
 (async function loadVideoJSLibs() {
-  for (let url of LIBS) {
-    await loadScript(url);
+  try {
+    for (let url of LIBS) {
+      await loadScript(url);
+    }
+    videojs.registerPlugin('hlsQualitySelector', window.videojsHlsQualitySelector);
+  } catch (err) {
+    console.error('Error loading Video.js libraries', err);
+  } finally {
+    initApp();
   }
-  videojs.registerPlugin('hlsQualitySelector', window.videojsHlsQualitySelector);
-  initApp();
 })();
 
 function initApp() {
@@ -31,6 +36,12 @@ function initApp() {
   const overlay       = document.getElementById('video-overlay');
   const closeBtn      = document.getElementById('video-close');
   let vjsPlayer       = null;
+
+  window.cerrarModal = function() {
+    document.getElementById('modal').style.display = 'none';
+    history.replaceState(null, '', window.location.pathname);
+    document.title = originalTitle;
+  };
 
   function generarSlug(t) {
     return t.toLowerCase().replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-');
@@ -47,12 +58,6 @@ function initApp() {
     document.title = t;
   }
 
-  window.cerrarModal = function() {
-    document.getElementById('modal').style.display = 'none';
-    history.replaceState(null,'',window.location.pathname);
-    document.title = originalTitle;
-  }
-
   async function cargarPaginas() {
     const res  = await fetch('/feeds/pages/default?alt=json');
     const data = await res.json();
@@ -67,8 +72,7 @@ function initApp() {
       const tipo   = tipoM ? tipoM[1].toUpperCase() : 'OVA';
       const enc    = encodeURIComponent(titulo.trim());
       const slug   = generarSlug(titulo);
-
-      const card = document.createElement('div');
+      const card   = document.createElement('div');
       card.className = 'card';
       card.innerHTML =
         `<span class="categoria ${tipo}">${tipo}</span>` +
@@ -86,7 +90,7 @@ function initApp() {
   function verificarAnimePorURL() {
     if (!animeParam) return;
     const dec = decodeURIComponent(animeParam).toLowerCase().trim();
-    (function intento(){
+    (function intento() {
       const m = paginasCache.find(p=>p.titulo.toLowerCase().trim()===dec);
       if (m) mostrarModal(m.titulo,m.contenido,m.tipo);
       else setTimeout(intento,100);
@@ -96,8 +100,8 @@ function initApp() {
   document.addEventListener('DOMContentLoaded', () => {
     cargarPaginas().then(() => {
       verificarAnimePorURL();
-      document.getElementById('loader').style.display='none';
-      document.body.style.visibility='visible';
+      document.getElementById('loader').style.display = 'none';
+      document.body.style.visibility = 'visible';
       if (videoParam) {
         const n  = parseInt(videoParam,10);
         const tr = document.querySelector(`table.episodis tr:nth-child(${n})`);
@@ -106,34 +110,37 @@ function initApp() {
     });
   });
 
-  function updateURL(k,v){
+  function updateURL(k, v) {
     const p = new URLSearchParams(window.location.search);
-    if (v==null) p.delete(k); else p.set(k,v);
+    if (v==null) p.delete(k);
+    else p.set(k, v);
     history.replaceState(v?{video:v}:null,'',window.location.pathname + (p.toString()?`?${p.toString()}`:''));
   }
 
-  window.showVideo = function(src,ep){
-    if (!vjsPlayer) {
-      vjsPlayer = videojs('overlay-player',{ html5:{ vhs:{ overrideNative:true }} });
-      vjsPlayer.hlsQualitySelector({ displayCurrentQuality:true });
+  window.showVideo = function(src, ep) {
+    if (!vjsPlayer && window.videojs) {
+      vjsPlayer = videojs('overlay-player',{html5:{vhs:{overrideNative:true}}});
+      if (vjsPlayer.hlsQualitySelector) {
+        vjsPlayer.hlsQualitySelector({displayCurrentQuality:true});
+      }
     }
     vjsPlayer.src({src,type:'application/x-mpegURL'});
     vjsPlayer.play();
     overlay.classList.add('active');
-    updateURL('video',ep);
-  }
+    updateURL('video', ep);
+  };
 
-  window.hideVideo = function(){
+  window.hideVideo = function() {
     if (vjsPlayer) {
       vjsPlayer.pause();
       vjsPlayer.currentTime(0);
     }
     overlay.classList.remove('active');
-    updateURL('video',null);
-  }
+    updateURL('video', null);
+  };
 
-  closeBtn.addEventListener('click',hideVideo);
-  window.addEventListener('popstate',e=>{
-    if (!e.state||!e.state.video) hideVideo();
+  closeBtn.addEventListener('click', window.hideVideo);
+  window.addEventListener('popstate', e => {
+    if (!e.state || !e.state.video) window.hideVideo();
   });
 }
