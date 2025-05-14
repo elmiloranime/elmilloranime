@@ -1,7 +1,8 @@
 const VIDEO_LIBS = [
-  'https://cdn.jsdelivr.net/npm/video.js/dist/video.min.js',
-  'https://cdn.jsdelivr.net/npm/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.min.js',
-  'https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js'
+  "https://cdn.jsdelivr.net/npm/video.js@7/dist/video.min.js",
+  "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1",
+  "https://cdn.jsdelivr.net/npm/@silvermine/videojs-chromecast@1/dist/silvermine-videojs-chromecast.min.js"
+  "https://cdn.jsdelivr.net/npm/videojs-afk-monitor@1.0.1/dist/videojs.afk-monitor.min.js"
 ];
 
 function loadScript(src) {
