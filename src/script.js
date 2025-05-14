@@ -1,12 +1,13 @@
+// === videojs + Chromecast + AFK Monitor ===
 const VIDEO_LIBS = [
-  "https://cdn.jsdelivr.net/npm/video.js@7/dist/video.min.js",
-  "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1",
-  "https://cdn.jsdelivr.net/npm/@silvermine/videojs-chromecast@1/dist/silvermine-videojs-chromecast.min.js"
-  "https://cdn.jsdelivr.net/npm/videojs-afk-monitor@1.0.1/dist/videojs.afk-monitor.min.js"
+  'https://cdn.jsdelivr.net/npm/video.js@7/dist/video.min.js',
+  'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1',
+  'https://cdn.jsdelivr.net/npm/@silvermine/videojs-chromecast@1/dist/silvermine-videojs-chromecast.min.js',
+  'https://cdn.jsdelivr.net/npm/videojs-afk-monitor@1.0.1/dist/videojs.afk-monitor.min.js'
 ];
 
 function loadScript(src) {
-  return new Promise((res, rej) => {
+  return new Promise((res,rej) => {
     const s = document.createElement('script');
     s.src = src;
     s.onload  = () => res();
@@ -15,14 +16,13 @@ function loadScript(src) {
   });
 }
 
-;(async ()=>{
-  for (let u of VIDEO_LIBS) {
-    try { await loadScript(u); }
-    catch(e){ console.warn(e); }
-  }
-  if (window.videojs && window.videojsHlsQualitySelector) {
-    if (!videojs.getPlugin('hlsQualitySelector')) {
-      videojs.registerPlugin('hlsQualitySelector', window.videojsHlsQualitySelector);
+;(async()=>{
+  for (let url of VIDEO_LIBS) {
+    try {
+      await loadScript(url);
+      console.log(`✅ Loaded ${url}`);
+    } catch(e) {
+      console.warn(e);
     }
   }
   runApp();
@@ -30,16 +30,16 @@ function loadScript(src) {
 
 function runApp(){
   const originalTitle = document.title;
-  const cache        = [];
-  const params       = new URLSearchParams(location.search);
-  const animeParam   = params.get('anime');
-  const videoParam   = params.get('video');
-  const overlay      = document.getElementById('video-overlay');
-  const closeBtn     = document.getElementById('video-close');
-  let player         = null;
+  const cache         = [];
+  const params        = new URLSearchParams(location.search);
+  const animeParam    = params.get('anime');
+  const videoParam    = params.get('video');
+  const overlay       = document.getElementById('video-overlay');
+  const closeBtn      = document.getElementById('video-close');
+  let player          = null;
 
   window.cerrarModal = ()=>{
-    document.getElementById('modal').style.display = 'none';
+    document.getElementById('modal').style.display='none';
     history.replaceState(null,'',location.pathname);
     document.title = originalTitle;
   };
@@ -54,7 +54,7 @@ function runApp(){
       `<span class="modal-close" onclick="cerrarModal()">×</span>`+
       `<span class="categoria ${tipo}">${tipo}</span>`+
       `<h2>${t}</h2>`+ html;
-    document.getElementById('modal').style.display = 'flex';
+    document.getElementById('modal').style.display='flex';
     document.title = t;
   }
 
@@ -79,7 +79,7 @@ function runApp(){
         `<img src="${img}" alt="${title}"/><h3>${title}</h3>`;
       card.onclick = ()=>{
         history.replaceState(null,'',`?anime=${enc}#${slug}`);
-        mostrarModal(title,body,tipo);
+        mostrarModal(title, body, tipo);
       };
       cont.appendChild(card);
       cache.push({title,body,tipo});
@@ -117,30 +117,60 @@ function runApp(){
 
   function updateURL(k,v){
     const p = new URLSearchParams(location.search);
-    if (v==null) p.delete(k); else p.set(k,v);
+    if (v==null) p.delete(k);
+    else p.set(k,v);
     history.replaceState(v?{video:v}:null,'',location.pathname + (p.toString()?`?${p.toString()}`:''));
   }
 
-  window.showVideo = (src, ep) => {
-    if (!player && window.videojs) {
-      player = videojs('overlay-player', {
-        techOrder: ['html5'],
-        html5: {
-          vhs: {
-            overrideNative: true
+  window.showVideo = (src, ep)=>{
+    if (!player && window.videojs){
+      player = videojs('overlay-player',{
+        controls: true,
+        liveui:   true,
+        preload: 'metadata',
+        playbackRates:[0.25,0.5,0.75,1,1.25,1.5,2],
+        techOrder:['chromecast','html5'],
+        controlBar: {
+          children:[
+            'playToggle','skipBackward','skipForward','volumePanel',
+            'currentTimeDisplay','timeDivider','durationDisplay',
+            'progressControl','liveDisplay','seekToLive',
+            'remainingTimeDisplay','customControlSpacer',
+            'playbackRateMenuButton','chaptersButton',
+            'descriptionsButton','subsCapsButton',
+            'audioTrackButton','pictureInPictureToggle','fullscreenToggle'
+          ],
+          skipButtons:{ forward:10, backward:10 }
+        },
+        html5:{ 
+          vhs:{ overrideNative:true },
+          withCredentials:false
+        },
+        plugins:{
+          chromecast:{
+            requestTitleFn:    ()=> document.title,
+            requestSubtitleFn: ()=> `Episodi ${ep}`
           }
         }
       });
-      if (player.hlsQualitySelector) {
-        player.hlsQualitySelector({ displayCurrentQuality: true });
-      }
+      player.ready(()=>{
+        if (typeof player.AFKMonitor==='function'){
+          player.AFKMonitor({
+            showMessageAfter:15*60*1000,
+            pausePlayerAfter:10*1000,
+            containerText:'¿Sigues ahí?',
+            continueButtonText:'Sí, continuar',
+            stopButtonText:'No',
+            waitClass:'vjs-waiting'
+          });
+        }
+      });
     }
-    player.src({ src, type: 'application/x-mpegURL' });
+    player.src({ src, type:'application/x-mpegURL' });
     player.play();
     overlay.classList.add('active');
-    updateURL('video', ep);
+    updateURL('video',ep);
   };
-
 
   window.hideVideo = ()=>{
     if (player){
@@ -152,7 +182,7 @@ function runApp(){
   };
 
   closeBtn.addEventListener('click', window.hideVideo);
-  window.addEventListener('popstate', e=>{
-    if (!e.state || !e.state.video) window.hideVideo();
+  window.addEventListener('popstate',e=>{
+    if (!e.state||!e.state.video) window.hideVideo();
   });
 }
