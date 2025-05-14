@@ -124,9 +124,30 @@ header {
     display: none;
 }
 
-.modal .tag span {
-  padding: 5px 7px;
-  background: #aaa;
-  color: #333;
-  border-radius: 1em;
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem;
+  justify-content: center;
+}
+
+.tags span {
+  background: linear-gradient(135deg, #ff7eb9, #ff758c);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  font-family: 'Mochiy Pop One', sans-serif;
+  transition: all 0.3s ease;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.tags span:hover {
+  transform: scale(1.08);
+  background: linear-gradient(135deg, #ff758c, #ff7eb9);
+  box-shadow: 0 0 10px rgba(255, 120, 150, 0.6);
 }
