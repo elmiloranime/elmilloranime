@@ -120,4 +120,13 @@ header {
   cursor: pointer;
 }
 
-.modla.url , .modal.tags{display: none;}
+.modal .url {
+    display: none;
+}
+
+.modal .tag span {
+  padding: 5px 7px;
+  background: #aaa;
+  color: #333;
+  border-radius: 1em;
+}
