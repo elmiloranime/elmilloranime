@@ -37,7 +37,34 @@ header {
   padding: 1rem;
 }
 
+.categoria {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 0;
+  background: #f00;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 4px 20px;
+  z-index: 10;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.categoria.OVA {
+  background: #d63384;
+}
+
+.categoria.SERIE {
+  background: #20c997;
+}
+
+.categoria.PELI {
+  background: #fd7e14;
+}
+
 .card {
+  position: relative;
   max-width: 240px;
   background: #1e1e1e;
   border-radius: 8px;
