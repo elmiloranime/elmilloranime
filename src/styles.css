@@ -119,3 +119,5 @@ header {
   font-size: 1.5rem;
   cursor: pointer;
 }
+
+.modla.url , .modal.tags{display: none;}
