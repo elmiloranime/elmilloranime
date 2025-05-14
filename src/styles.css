@@ -38,6 +38,7 @@ header {
 }
 
 .card {
+  max-width: 240px;
   background: #1e1e1e;
   border-radius: 8px;
   overflow: hidden;
