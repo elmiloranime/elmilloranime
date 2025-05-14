@@ -89,10 +89,7 @@ function updateURL(k,v){
 }
 
 function showVideo(src,ep){
-  if (!vjsPlayer) {
-    vjsPlayer = videojs('overlay-player',{html5:{vhs:{overrideNative:true}}});
-    vjsPlayer.hlsQualitySelector({displayCurrentQuality:true});
-  }
+  vjsPlayer = videojs('overlay-player',{html5:{vhs:{overrideNative:true}}});
   vjsPlayer.src({src,type:'application/x-mpegURL'});
   vjsPlayer.play();
   overlay.classList.add('active');
