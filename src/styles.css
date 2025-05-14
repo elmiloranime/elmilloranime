@@ -193,6 +193,7 @@ header {
 
 .ficha .sinopsis {
   flex: 1 1 400px;
+  min-width: 250px;
   color: #eee;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -201,4 +202,5 @@ header {
   border-radius: 10px;
   box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
 }
+
 
