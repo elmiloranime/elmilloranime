@@ -150,3 +150,27 @@ header {
   background: linear-gradient(135deg, #ff758c, #ff7eb9);
   box-shadow: 0 0 10px rgba(255, 120, 150, 0.6);
 }
+
+.caraturla {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem auto;
+  max-width: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.caraturla:hover {
+  transform: scale(1.03);
+  box-shadow: 0 15px 25px rgba(255, 120, 150, 0.4);
+}
+
+.caraturla img {
+  width: 100%;
+  height: auto;
+  border: none;
+  display: block;
+  border-radius: inherit;
+}
