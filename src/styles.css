@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  background: #121212;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  visibility: hidden;
+}
+
+#loader {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #121212;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  z-index: 1000;
+}
+
+header {
+  font-family: "Mochiy Pop One", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  text-align: center;
+  padding: 1rem;
+  background: #1e1e1e;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.card {
+  background: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px #000;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card h3 {
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #1e1e1e;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1rem;
+  border-radius: 8px;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
