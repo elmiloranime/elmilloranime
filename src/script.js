@@ -2,7 +2,7 @@
 
 // URLs de Video.js y plugins (versiones verificadas en jsDelivr)
 const LIBS = [
-  'https://vjs.zencdn.net/7.24.0/video.min.js',
+  'https://cdn.jsdelivr.net/npm/video.js/dist/video.min.js',
   'https://cdn.jsdelivr.net/npm/videojs-contrib-quality-levels@2.2.0/dist/videojs-contrib-quality-levels.min.js',
   'https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector@1.2.0/dist/videojs-hls-quality-selector.min.js'
 ];
