@@ -1,15 +1,18 @@
+// script.js
+
+// URLs de Video.js y plugins (versiones verificadas en jsDelivr)
 const LIBS = [
   'https://vjs.zencdn.net/7.24.0/video.min.js',
-  'https://unpkg.com/videojs-contrib-quality-levels@2.0.10/dist/videojs-contrib-quality-levels.min.js',
-  'https://unpkg.com/videojs-hls-quality-selector@1.1.1/dist/videojs-hls-quality-selector.min.js'
+  'https://cdn.jsdelivr.net/npm/videojs-contrib-quality-levels@2.2.0/dist/videojs-contrib-quality-levels.min.js',
+  'https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector@1.2.0/dist/videojs-hls-quality-selector.min.js'
 ];
 
 function loadScript(src) {
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     const s = document.createElement('script');
     s.src = src;
-    s.onload = () => res();
-    s.onerror = (e) => rej(e);
+    s.onload = () => resolve(src);
+    s.onerror = () => reject(new Error(`Failed to load ${src}`));
     document.head.appendChild(s);
   });
 }
@@ -18,10 +21,17 @@ function loadScript(src) {
   try {
     for (let url of LIBS) {
       await loadScript(url);
+      console.log(`✅ Loaded ${url}`);
     }
-    videojs.registerPlugin('hlsQualitySelector', window.videojsHlsQualitySelector);
+    // Registrar el plugin HLS Quality Selector
+    const plugin = window.videojsHlsQualitySelector || window.VideojsHlsQualitySelector;
+    if (window.videojs && plugin) {
+      videojs.registerPlugin('hlsQualitySelector', plugin);
+    } else {
+      console.warn('⚠️ No s’ha trobat el plugin de HLS Quality Selector');
+    }
   } catch (err) {
-    console.error('Error loading Video.js libraries', err);
+    console.error('Error loading Video.js libraries:', err);
   } finally {
     initApp();
   }
@@ -100,8 +110,8 @@ function initApp() {
   document.addEventListener('DOMContentLoaded', () => {
     cargarPaginas().then(() => {
       verificarAnimePorURL();
-      document.getElementById('loader').style.display = 'none';
-      document.body.style.visibility = 'visible';
+      document.getElementById('loader').style.display='none';
+      document.body.style.visibility='visible';
       if (videoParam) {
         const n  = parseInt(videoParam,10);
         const tr = document.querySelector(`table.episodis tr:nth-child(${n})`);
