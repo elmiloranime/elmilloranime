@@ -38,9 +38,11 @@ header {
 }
 
 .categoria {
+  text-align: center;
+  width: 100px;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 75px;
+  left: -25px;
   transform: rotate(-45deg);
   transform-origin: 0 0;
   background: #f00;
@@ -49,19 +51,12 @@ header {
   font-weight: bold;
   padding: 4px 20px;
   z-index: 10;
-  box-shadow: 0 0 5px rgba(0,0,0,0.5);
-}
-.categoria.OVA {
-  background: #d63384;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.categoria.SERIE {
-  background: #20c997;
-}
-
-.categoria.PELI {
-  background: #fd7e14;
-}
+.categoria.OVA { background: #d63384; }
+.categoria.SERIE { background: #20c997; }
+.categoria.PELI { background: #fd7e14; }
 
 .card {
   position: relative;
