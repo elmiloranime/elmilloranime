@@ -8,8 +8,10 @@ body {
 
 #loader {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: #121212;
   color: #fff;
   display: flex;
@@ -37,6 +39,7 @@ header {
   padding: 1rem;
 }
 
+/* CATEGORIA (ribbon a l'esquerra) */
 .categoria {
   text-align: center;
   width: 100px;
@@ -53,11 +56,11 @@ header {
   z-index: 10;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
-
 .categoria.OVA { background: #d63384; }
 .categoria.SERIE { background: #20c997; }
 .categoria.PELI { background: #fd7e14; }
 
+/* CARDS PREVISUALS */
 .card {
   position: relative;
   max-width: 240px;
@@ -68,51 +71,46 @@ header {
   transition: transform 0.2s;
   cursor: pointer;
 }
-
 .card:hover {
   transform: scale(1.03);
 }
-
 .card img {
   width: 100%;
   height: auto;
   display: block;
 }
-
 .card h3 {
   padding: 0.5rem;
   font-size: 1.1rem;
   text-align: center;
 }
 
+/* MODAL */
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 }
-
 .modal-content {
-    background: #1e1e1e;
-    width: 100vw;
-    height: 100vh;
-    overflow-y: auto;
-    padding: 0px;
-    margin: 0px;
-    position: relative;
+  background: #1e1e1e;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  position: relative;
 }
-
 .modal-content h2 {
   padding: 25px 75px;
   margin-top: 0;
 }
-
 .modal-close {
   position: absolute;
   top: 0.5rem;
@@ -120,23 +118,22 @@ header {
   font-size: 1.5rem;
   cursor: pointer;
 }
-
 .modal .url {
-    display: none;
+  display: none;
 }
 
+/* TAGS */
 .tags {
-    border-top: 2px solid;
-    margin: 0 25px;
-    border-radius: 25px;
-    display: flex;
-    gap: 0.5rem;
-    padding: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: stretch;
+  border-top: 2px solid;
+  margin: 0 25px;
+  border-radius: 25px;
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: stretch;
 }
-
 .tags span {
   background: linear-gradient(135deg, #ff7eb9, #ff758c);
   color: #000;
@@ -149,30 +146,41 @@ header {
   cursor: default;
   white-space: nowrap;
 }
-
 .tags span:hover {
   transform: scale(1.08);
   background: linear-gradient(135deg, #ff758c, #ff7eb9);
   box-shadow: 0 0 10px rgba(255, 120, 150, 0.6);
 }
 
-.caraturla {
+/* FITXA DE DETALL */
+.ficha {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.ficha .caraturla {
+  flex: 0 0 300px;
+  max-width: 100%;
+  margin: 0;
   display: flex;
   justify-content: center;
-  margin: 1.5rem auto;
-  max-width: 300px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0,0,0,0.5);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-.caraturla:hover {
+.ficha .caraturla:hover {
   transform: scale(1.03);
   box-shadow: 0 15px 25px rgba(255, 120, 150, 0.4);
 }
-
-.caraturla img {
+.ficha .caraturla img {
   width: 100%;
   height: auto;
   border: none;
@@ -180,39 +188,34 @@ header {
   border-radius: inherit;
 }
 
-.ficha {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.5rem;
-  justify-content: center;
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 1rem;
-  align-items: start;
-}
-
-.ficha .caraturla {
-  max-width: 300px;
-}
-
 .ficha .sinopsis {
-  color: #eee;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+  flex: 1 1 400px;
   min-width: 250px;
+  color: #eee;
+  font-size: 1rem;
+  line-height: 1.6;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+  transition: background 0.3s ease;
 }
 
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .ficha {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
   }
 
   .ficha .caraturla,
   .ficha .sinopsis {
-    max-width: 100%;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .ficha .sinopsis {
+    margin-top: 1rem;
   }
 }
