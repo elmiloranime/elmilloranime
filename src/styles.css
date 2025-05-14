@@ -39,6 +39,7 @@ header {
   padding: 1rem;
 }
 .card {
+  max-width: 240px;
   position: relative;
   background: #1e1e1e;
   border-radius: 8px;
@@ -112,9 +113,10 @@ header {
   z-index: 999;
 }
 .modal-content {
+  width: 100vw;
+  height: 100vh;
   background: #1e1e1e;
   width: 90vw; max-width: 1000px;
-  max-height: 90vh;
   overflow-y: auto;
   border-radius: 12px;
   position: relative;
