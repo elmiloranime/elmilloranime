@@ -1,8 +1,12 @@
-const originalTitle = document.title;
-const paginasCache = [];
-const params = new URLSearchParams(window.location.search);
-const animeParam = params.get('anime');
-const videoParam = params.get('video');
+const originalTitle     = document.title;
+const paginasCache      = [];
+const params            = new URLSearchParams(window.location.search);
+const animeParam        = params.get('anime');
+const videoParam        = params.get('video');
+var vjsPlayer           = null;
+var overlay             = document.getElementById('video-overlay');
+var overlayVid          = document.getElementById('overlay-player');
+var closeBtn            = document.getElementById('video-close');
 
 function generarSlug(texto) {
   return texto.toLowerCase().replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-');
@@ -79,10 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
-const overlay    = document.getElementById('video-overlay');
-const overlayVid = document.getElementById('overlay-player');
-const closeBtn   = document.getElementById('video-close');
 
 function showVideo(src, ep) {
   if (!vjsPlayer) {
