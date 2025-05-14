@@ -19,7 +19,7 @@ function verificarAnimePorURL() {
   const intentoAbrir = () => {
     const match = paginasCache.find(p => p.titulo.toLowerCase().trim() === decodificado);
     if (match) {
-      mostrarModal(match.titulo, match.contenido);
+      mostrarModal(match.titulo, match.contenido, match.tipo);
     } else {
       setTimeout(intentoAbrir, 100);
     }
@@ -28,10 +28,15 @@ function verificarAnimePorURL() {
   intentoAbrir();
 }
 
-function mostrarModal(titulo, contenido) {
+function mostrarModal(titulo, contenido, tipo) {
   const modal = document.getElementById('modal');
   const modalContent = document.getElementById('modal-content');
-  modalContent.innerHTML = `<span class="modal-close" onclick="cerrarModal()">×</span><h2>${titulo}</h2>${contenido}`;
+
+  modalContent.innerHTML = `
+    <span class="categoria ${tipo}">${tipo}</span>
+    <h2>${titulo}</h2>
+    ${contenido}
+  `;
   modal.style.display = 'flex';
   document.title = titulo;
 }
@@ -61,10 +66,11 @@ async function cargarPaginas() {
     const encoded = encodeURIComponent(titulo.trim());
     const slug = generarSlug(titulo);
 
-    // Detectar tipo
+    // Detectar tipus
     const tipoMatch = contenido.match(/<span class="categoria">(SERIE|OVA|PELI)<\/span>/i);
     const tipo = tipoMatch ? tipoMatch[1].toUpperCase() : 'OVA';
 
+    // Generar targeta
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -75,11 +81,11 @@ async function cargarPaginas() {
 
     card.addEventListener('click', () => {
       history.replaceState(null, '', `?anime=${encoded}#${slug}`);
-      mostrarModal(titulo, contenido);
+      mostrarModal(titulo, contenido, tipo);
     });
 
     contenedor.appendChild(card);
-    paginasCache.push({ titulo, contenido });
+    paginasCache.push({ titulo, contenido, tipo });
   }
 }
 
