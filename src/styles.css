@@ -209,3 +209,45 @@ table.episodis td:nth-child(2) span {
   .ficha .sinopsis { width: 100%; max-width: 500px; }
   table.episodis td { font-size: .9rem; padding: .5rem; }
 }
+
+/* === video === */
+.video-overlay {
+  position: fixed;
+  inset: 0;                   /* top:0; right:0; bottom:0; left:0 */
+  display: none;              /* ocult per defecte */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 10000;             /* superiorde tot */
+}
+
+.video-overlay.active {
+  display: flex;              /* apareix quan li afegeixes .active */
+}
+
+.video-container {
+  position: relative;
+  width: 80%;
+  max-width: 900px;
+}
+
+#overlay-player {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.video-close {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  background: #ff758c;
+  color: #fff;
+  font-size: 2rem;
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
