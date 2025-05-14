@@ -39,7 +39,8 @@ async function cargarPaginas() {
     const tipo   = tipoM ? tipoM[1].toUpperCase() : 'OVA';
     const enc    = encodeURIComponent(titulo.trim());
     const slug   = generarSlug(titulo);
-    const card   = document.createElement('div');
+
+    const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML =
       `<span class="categoria ${tipo}">${tipo}</span>` +
@@ -49,6 +50,7 @@ async function cargarPaginas() {
       history.replaceState(null,'',`?anime=${enc}#${slug}`);
       mostrarModal(titulo, contenido, tipo);
     };
+
     cont.appendChild(card);
     paginasCache.push({titulo,contenido,tipo});
   }
@@ -78,18 +80,17 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 let vjsPlayer = null;
-const overlay    = document.getElementById('video-overlay');
-const overlayVid = document.getElementById('overlay-player');
-const closeBtn   = document.getElementById('video-close');
+const overlay  = document.getElementById('video-overlay');
+const closeBtn = document.getElementById('video-close');
 
 function updateURL(key,val){
-  const p=new URLSearchParams(window.location.search);
-  if(val==null) p.delete(key); else p.set(key,val);
-  history.replaceState(val?{video:val}:null,'',window.location.pathname+(p.toString()?`?${p.toString()}`:''));
+  const p = new URLSearchParams(window.location.search);
+  if (val==null) p.delete(key); else p.set(key,val);
+  history.replaceState(val?{video:val}:null,'',window.location.pathname + (p.toString()?`?${p.toString()}`:''));
 }
 
 function showVideo(src,ep){
-  if(!vjsPlayer){
+  if (!vjsPlayer) {
     vjsPlayer = videojs('overlay-player',{html5:{vhs:{overrideNative:true}}});
     vjsPlayer.hlsQualitySelector({displayCurrentQuality:true});
   }
@@ -100,7 +101,7 @@ function showVideo(src,ep){
 }
 
 function hideVideo(){
-  if(vjsPlayer){
+  if (vjsPlayer) {
     vjsPlayer.pause();
     vjsPlayer.currentTime(0);
   }
@@ -110,5 +111,5 @@ function hideVideo(){
 
 closeBtn.addEventListener('click',hideVideo);
 window.addEventListener('popstate',e=>{
-  if(!e.state||!e.state.video) hideVideo();
+  if (!e.state||!e.state.video) hideVideo();
 });
