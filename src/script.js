@@ -120,19 +120,26 @@ function runApp(){
     history.replaceState(v?{video:v}:null,'',location.pathname + (p.toString()?`?${p.toString()}`:''));
   }
 
-  window.showVideo = (src,ep)=>{
-    if (!player && window.videojs){
-      videojs.options.html5.vhs.overrideNative = true;
-      player = videojs('overlay-player');
-      if (player.hlsQualitySelector){
-        player.hlsQualitySelector({displayCurrentQuality:true});
+  window.showVideo = (src, ep) => {
+    if (!player && window.videojs) {
+      player = videojs('overlay-player', {
+        techOrder: ['html5'],
+        html5: {
+          vhs: {
+            overrideNative: true
+          }
+        }
+      });
+      if (player.hlsQualitySelector) {
+        player.hlsQualitySelector({ displayCurrentQuality: true });
       }
     }
-    player.src([{src,type:'application/vnd.apple.mpegurl'}]);
+    player.src({ src, type: 'application/x-mpegURL' });
     player.play();
     overlay.classList.add('active');
-    updateURL('video',ep);
+    updateURL('video', ep);
   };
+
 
   window.hideVideo = ()=>{
     if (player){
