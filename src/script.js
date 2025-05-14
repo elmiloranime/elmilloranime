@@ -50,7 +50,6 @@ async function cargarPaginas() {
       history.replaceState(null,'',`?anime=${enc}#${slug}`);
       mostrarModal(titulo, contenido, tipo);
     };
-
     cont.appendChild(card);
     paginasCache.push({titulo,contenido,tipo});
   }
@@ -60,19 +59,19 @@ function verificarAnimePorURL() {
   if (!animeParam) return;
   const dec = decodeURIComponent(animeParam).toLowerCase().trim();
   (function intento(){
-    const match = paginasCache.find(p=>p.titulo.toLowerCase().trim()===dec);
-    if (match) mostrarModal(match.titulo, match.contenido, match.tipo);
+    const m = paginasCache.find(p=>p.titulo.toLowerCase().trim()===dec);
+    if (m) mostrarModal(m.titulo,m.contenido,m.tipo);
     else setTimeout(intento,100);
   })();
 }
 
-document.addEventListener('DOMContentLoaded',()=>{
-  cargarPaginas().then(()=>{
+document.addEventListener('DOMContentLoaded', () => {
+  cargarPaginas().then(() => {
     verificarAnimePorURL();
     document.getElementById('loader').style.display='none';
     document.body.style.visibility='visible';
     if (videoParam) {
-      const n = parseInt(videoParam,10);
+      const n  = parseInt(videoParam,10);
       const tr = document.querySelector(`table.episodis tr:nth-child(${n})`);
       if (tr) tr.click();
     }
@@ -83,10 +82,10 @@ let vjsPlayer = null;
 const overlay  = document.getElementById('video-overlay');
 const closeBtn = document.getElementById('video-close');
 
-function updateURL(key,val){
+function updateURL(k,v){
   const p = new URLSearchParams(window.location.search);
-  if (val==null) p.delete(key); else p.set(key,val);
-  history.replaceState(val?{video:val}:null,'',window.location.pathname + (p.toString()?`?${p.toString()}`:''));
+  if (v==null) p.delete(k); else p.set(k,v);
+  history.replaceState(v?{video:v}:null,'',window.location.pathname + (p.toString()?`?${p.toString()}`:''));
 }
 
 function showVideo(src,ep){
