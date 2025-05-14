@@ -3,8 +3,8 @@
 // URLs de Video.js y plugins (versiones verificadas en jsDelivr)
 const LIBS = [
   'https://cdn.jsdelivr.net/npm/video.js/dist/video.min.js',
-  'https://cdn.jsdelivr.net/npm/videojs-contrib-quality-levels@2.2.0/dist/videojs-contrib-quality-levels.min.js',
-  'https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector@1.2.0/dist/videojs-hls-quality-selector.min.js'
+  'https://cdn.jsdelivr.net/npm/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.min.js',
+  'https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js'
 ];
 
 function loadScript(src) {
