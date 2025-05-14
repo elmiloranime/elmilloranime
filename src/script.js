@@ -84,21 +84,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+function updateURL(key, val) {
+  var p = new URLSearchParams(window.location.search);
+  if (val == null) p.delete(key);
+  else p.set(key, val);
+  history.replaceState(val ? {video:val} : null, '', window.location.pathname + (p.toString() ? '?' + p.toString() : ''));
+}
+
 function showVideo(src, ep) {
   if (!vjsPlayer) {
     vjsPlayer = videojs('overlay-player', {
       html5: { vhs: { overrideNative: true } }
     });
-    videojs.registerPlugin('qualitySelector', window.videojsHlsQualitySelector);
-    vjsPlayer.qualitySelector({ displayCurrentQuality: true });
+    vjsPlayer.hlsQualitySelector({ displayCurrentQuality: true });
   }
-  vjsPlayer.src({ src, type: 'application/x-mpegURL' });
+  vjsPlayer.src({ src: src, type: 'application/x-mpegURL' });
   vjsPlayer.play();
   overlay.classList.add('active');
-
-  const p = new URLSearchParams(window.location.search);
-  p.set('video', ep);
-  history.pushState({ video: ep }, '', window.location.pathname + '?' + p);
+  updateURL('video', ep);
 }
 
 function hideVideo() {
@@ -107,12 +110,10 @@ function hideVideo() {
     vjsPlayer.currentTime(0);
   }
   overlay.classList.remove('active');
-  const p = new URLSearchParams(window.location.search);
-  p.delete('video');
-  history.replaceState(null, '', window.location.pathname + (p.toString() ? '?' + p : ''));
+  updateURL('video', null);
 }
 
 closeBtn.addEventListener('click', hideVideo);
-window.addEventListener('popstate', e => {
+window.addEventListener('popstate', function(e) {
   if (!e.state || !e.state.video) hideVideo();
 });
