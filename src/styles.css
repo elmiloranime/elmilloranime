@@ -134,13 +134,12 @@ header {
 
 .tags span {
   background: linear-gradient(135deg, #ff7eb9, #ff758c);
-  color: white;
+  color: #000;
   font-size: 0.8rem;
   font-weight: 600;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  font-family: 'Mochiy Pop One', sans-serif;
   transition: all 0.3s ease;
   cursor: default;
   white-space: nowrap;
