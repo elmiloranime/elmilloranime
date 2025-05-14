@@ -88,35 +88,42 @@ const overlay    = document.getElementById('video-overlay');
 const overlayVid = document.getElementById('overlay-player');
 const closeBtn   = document.getElementById('video-close');
 
-function updateURL(key,val){
-  const p=new URLSearchParams(window.location.search);
-  if(val==null)p.delete(key); else p.set(key,val);
-  history.replaceState(val?{video:val}:null,'',window.location.pathname+(p.toString()?`?${p.toString()}`:''));
-}
-
-function showVideo(src,ep){
-  if(!vjsPlayer){
-    vjsPlayer = videojs('overlay-player',{
-      html5:{vhs:{overrideNative:true}}
-    });
-    vjsPlayer.hlsQualitySelector({displayCurrentQuality:true});
+function showVideo(src, ep) {
+  // Espera a que videojs esté definido
+  if (typeof videojs !== 'function') {
+    console.error('videojs no está disponible aún');
+    return;
   }
-  vjsPlayer.src({src,type:'application/x-mpegURL'});
+
+  if (!vjsPlayer) {
+    vjsPlayer = videojs('overlay-player', {
+      html5: { vhs: { overrideNative: true } }
+    });
+    // Ahora que el plugin está registrado, podrás usarlo:
+    vjsPlayer.hlsQualitySelector({ displayCurrentQuality: true });
+  }
+
+  vjsPlayer.src({ src, type: 'application/x-mpegURL' });
   vjsPlayer.play();
   overlay.classList.add('active');
-  updateURL('video',ep);
+
+  const p = new URLSearchParams(window.location.search);
+  p.set('video', ep);
+  history.pushState({ video: ep }, '', window.location.pathname + '?' + p.toString());
 }
 
-function hideVideo(){
-  if(vjsPlayer){
+function hideVideo() {
+  if (vjsPlayer) {
     vjsPlayer.pause();
     vjsPlayer.currentTime(0);
   }
   overlay.classList.remove('active');
-  updateURL('video',null);
+  const p = new URLSearchParams(window.location.search);
+  p.delete('video');
+  history.replaceState(null, '', window.location.pathname + (p.toString() ? '?' + p.toString() : ''));
 }
 
 closeBtn.addEventListener('click', hideVideo);
-window.addEventListener('popstate', e=>{
-  if(!e.state||!e.state.video) hideVideo();
+window.addEventListener('popstate', e => {
+  if (!e.state || !e.state.video) hideVideo();
 });
