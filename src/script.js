@@ -85,27 +85,31 @@ const overlayVid = document.getElementById('overlay-player');
 const closeBtn   = document.getElementById('video-close');
 
 function showVideo(src, ep) {
-  if (window.Hls && Hls.isSupported()) {
-    const hls = new Hls();
-    hls.loadSource(src);
-    hls.attachMedia(overlayVid);
-  } else {
-    overlayVid.src = src;
+  if (!vjsPlayer) {
+    vjsPlayer = videojs('overlay-player', {
+      html5: { vhs: { overrideNative: true } }
+    });
+    videojs.registerPlugin('qualitySelector', window.videojsHlsQualitySelector);
+    vjsPlayer.qualitySelector({ displayCurrentQuality: true });
   }
+  vjsPlayer.src({ src, type: 'application/x-mpegURL' });
+  vjsPlayer.play();
   overlay.classList.add('active');
-  overlayVid.play();
+
   const p = new URLSearchParams(window.location.search);
   p.set('video', ep);
-  history.pushState({video: ep}, '', window.location.pathname + '?' + p);
+  history.pushState({ video: ep }, '', window.location.pathname + '?' + p);
 }
 
 function hideVideo() {
-  overlayVid.pause();
-  overlayVid.removeAttribute('src');
+  if (vjsPlayer) {
+    vjsPlayer.pause();
+    vjsPlayer.currentTime(0);
+  }
   overlay.classList.remove('active');
   const p = new URLSearchParams(window.location.search);
   p.delete('video');
-  history.replaceState(null,'',window.location.pathname + (p.toString() ? '?' + p : ''));
+  history.replaceState(null, '', window.location.pathname + (p.toString() ? '?' + p : ''));
 }
 
 closeBtn.addEventListener('click', hideVideo);
