@@ -198,9 +198,61 @@ header {
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
   transition: background 0.3s ease;
 }
-.ficha .caraturla, .ficha .sinopsis{
-  
+.ficha .caraturla,
+.ficha .sinopsis{ height: 1.5lh !important; }
+
+table.episodis {
+  width: 95%;
+  margin: 2rem auto;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 0.95rem;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
 }
+
+table.episodis tr {
+  background: #1e1e1e;
+  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+table.episodis tr:hover {
+  background: #292929;
+  transform: scale(1.01);
+}
+
+table.episodis td {
+  padding: 1rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #eee;
+  vertical-align: middle;
+}
+
+table.episodis td:first-child span {
+  display: inline-block;
+  background: #ff7eb9;
+  color: #000;
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+table.episodis td:nth-child(2) span {
+  font-size: 0.8rem;
+  color: #ccc;
+  font-family: monospace;
+}
+
+table.episodis td:last-child {
+  font-weight: 500;
+  color: #fff;
+}
+
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .ficha {
@@ -210,5 +262,11 @@ header {
   }
   .ficha .sinopsis {
     margin-top: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  table.episodis td {
+    font-size: 0.9rem;
+    padding: 0.75rem;
   }
 }
