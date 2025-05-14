@@ -119,7 +119,6 @@ header {
   width: 100vw;
   height: 100vh;
   background: #1e1e1e;
-  width: 90vw; max-width: 1000px;
   overflow-y: auto;
   border-radius: 12px;
   position: relative;
