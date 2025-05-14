@@ -160,14 +160,12 @@ header {
   align-items: flex-start;
   justify-content: center;
   gap: 2rem;
-  max-width: 1000px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
 .ficha .caraturla {
   flex: 0 0 300px;
-  max-width: 100%;
   margin: 0;
   display: flex;
   justify-content: center;
