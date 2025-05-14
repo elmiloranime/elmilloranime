@@ -198,7 +198,9 @@ header {
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
   transition: background 0.3s ease;
 }
-
+.ficha .caraturla, .ficha .sinopsis{
+  
+}
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .ficha {
@@ -206,13 +208,6 @@ header {
     align-items: center;
     padding: 1rem;
   }
-
-  .ficha .caraturla,
-  .ficha .sinopsis {
-    width: 100%;
-    max-width: 500px;
-  }
-
   .ficha .sinopsis {
     margin-top: 1rem;
   }
